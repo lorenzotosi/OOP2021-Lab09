@@ -30,6 +30,10 @@ public final class Test {
      * pilotare la direzione su/giù si aggiunga un flag booleano all'agente --
      * deve essere volatile? - la disabilitazione dei pulsanti sia realizzata
      * col metodo setEnabled
+     * 
+     * ((non creare troppi thread. sincronizzazione fatta bene. gui lettura file per 
+     * evitare blocco gui))
+     * 
      */
 
     /**
@@ -39,6 +43,6 @@ public final class Test {
      * 
      */
     public static void main(final String... args) {
-        // new ConcurrentGUI();
+        new ConcurrentGUI();
     }
 }

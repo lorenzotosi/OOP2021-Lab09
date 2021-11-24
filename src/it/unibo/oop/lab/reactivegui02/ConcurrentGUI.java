@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
  * 
  *
  */
-public class ConcurrentGUI extends JFrame {
+public final class ConcurrentGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private static final double WIDTH_PERC = 0.2;
@@ -46,6 +46,9 @@ public class ConcurrentGUI extends JFrame {
         stop.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
                 agent.stopCounting();
+                up.setEnabled(false);
+                down.setEnabled(false);
+                stop.setEnabled(false);
             }
         });
         up.addActionListener(new ActionListener() {
@@ -59,19 +62,20 @@ public class ConcurrentGUI extends JFrame {
             }
         });
     }
+
     private class Agent implements Runnable {
         private volatile boolean stop;
         private int counter;
-        private boolean switcher = true;
+        private volatile boolean switcher = true;
         @Override
         public void run() {
             while (!this.stop) {
                 try {
-
+                    final int currentcounter = this.counter;
                     SwingUtilities.invokeAndWait(new Runnable() {
                         @Override
                         public void run() {
-                            ConcurrentGUI.this.display.setText(Integer.toString(Agent.this.counter));
+                            ConcurrentGUI.this.display.setText(Integer.toString(currentcounter));
                         }
                     });
                     if (this.switcher) {
@@ -86,14 +90,15 @@ public class ConcurrentGUI extends JFrame {
                 }
             }
         }
+
         public void stopCounting() {
             this.stop = true;
-            up.setEnabled(false);
-            down.setEnabled(false);
         }
+
         public void upCount() {
             this.switcher = true;
         }
+
         public void downCount() {
             this.switcher = false;
         }

@@ -11,7 +11,7 @@ public class MultiThreadedSumMatrix implements SumMatrix {
     private final int nthreads;
     /**
      * 
-     * @param n a
+     * @param n number of threads
      */
     public MultiThreadedSumMatrix(final int n) {
         this.nthreads = n;
@@ -27,7 +27,7 @@ public class MultiThreadedSumMatrix implements SumMatrix {
          * Build a new worker.
          * 
          * @param list
-         *            the list to sum
+         *            the matrix to sum
          * @param startpos
          *            the initial position for this worker
          * @param nelem
@@ -60,9 +60,9 @@ public class MultiThreadedSumMatrix implements SumMatrix {
         }
     }
     /**
-     * @return a
+     * @return the sum of every element in the matrix
      * 
-     * @param list a
+     * @param list matrix
      */
     public double sum(final double[][] list) {
         final int size = list.length % nthreads + list.length / nthreads;
